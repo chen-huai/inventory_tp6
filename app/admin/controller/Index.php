@@ -41,8 +41,9 @@ class Index
     }
     public function searchMany()
     {
-
-       return json(User::find(1)->permissions);
+//       return json(User::find(1)->permissions);
+//       return json(User::find(1)->permissions()->select());
+       return json(User::hasWhere('permissions',['user_id'=>1])->select());
     }
 
 }

@@ -43,7 +43,15 @@ class Index
     {
 //       return json(User::find(1)->permissions);
 //       return json(User::find(1)->permissions()->select());
-       return json(User::hasWhere('permissions',['user_id'=>1])->select());
+
+
+//        $user = User::find(1);
+//        $role = $user -> permissions;
+//        return json($role);
+//        $user = User::alias('u')->field(['username','password'])->select();
+//        return json($user);
+        return json(User::count());
+
     }
 
 }

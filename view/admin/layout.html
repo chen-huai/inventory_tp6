@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>库存管理后台中心</title>
+ <!--    {load href='../../public/layui/css/layui.css'} -->
+	<!-- {load href='/public/layui/layui.js'} -->
+    <link rel="stylesheet" href="../../static/layui/css/layui.css">
+    <script src="../../static/layui/layui.js"></script>
+</head>
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">库存后台管理</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                    <i class="layui-icon layui-icon-spread-left" id="LAY_app_flexible" style="display: none;"></i>
+                    <i class="layui-icon layui-icon-shrink-right" id="LAY_app_left"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="../../index/index/index" target="_blank" title="前台">
+                    <i class="layui-icon layui-icon-website"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+<!--            <li class="layui-nav-item">-->
+<!--                <a href="javascript:;">-->
+<!--                    <img src="" class="layui-nav-img">&lt;!&ndash; http://t.cn/RCzsdCq &ndash;&gt;-->
+<!--                    个人中心-->
+<!--                </a>-->
+<!--                <dl class="layui-nav-child">-->
+<!--                    <dd><a href="">基本资料</a></dd>-->
+<!--                    <dd><a href="">安全设置</a></dd>-->
+<!--                </dl>-->
+<!--            </li>-->
+            <li class="layui-nav-item"><a href="{:url('admin/Index/logout')}">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree site-demo-nav">
+                <li class="layui-nav-item layui-nav-itemed" >
+                    <a class="javascript:;" href="javascript:;"><i class="layui-icon layui-icon-username"></i>人员管理</a>
+                    <dl class="layui-nav-child">
+                        <dd class=""><a href="../../admin/users/userlist">用户管理</a></dd>
+                        <dd class=""><a href="../../admin/supplier/userlist">权限管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="javascript:;" href="javascript:;"><i class="layui-icon layui-icon-component"></i>物品管理</a>
+                    <dl class="layui-nav-child">
+                        <dd class=""><a href="../../admin/users/userlist">供应商管理</a></dd>
+                        <dd class=""><a href="../../admin/supplier/userlist">商品管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="javascript:;" href="javascript:;"><i class="layui-icon layui-icon-list"></i>仓库管理</a>
+                    <dl class="layui-nav-child">
+                        <dd class=""><a href="../../admin/users/userlist">出库</a></dd>
+                        <dd class=""><a href="../../admin/supplier/userlist">入库</a></dd>
+                        <dd class=""><a href="../../admin/supplierproduct/userlist">盘点</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="col-md-10 my-right">
+            {__CONTENT__}
+        </div>
+    </div>
+
+    <div class="layui-footer">
+         追逐卓越 从心开始
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    //触发事件
+    layui.use(['element','form', 'laydate','jquery', 'layedit','table','layer'], function() {
+        var element = layui.element
+            , form = layui.form
+            , laydate = layui.laydate
+            , $ = layui.jquery
+            , layedit = layui.layedit
+            , table = layui.table
+            , layer = layui.layer;
+        var active = {
+            tabAdd: function () {
+                //新增一个Tab项
+                element.tabAdd('demo', {
+                    title: '用户'//用于演示
+                    , content: "<iframe src='index/index.html' frameborder='0' class='layadmin-iframe'></iframe>"
+                    , id: 'yonghu' //实际使用一般是规定好的id，这里以时间戳模拟下
+
+                })
+            }
+        };
+
+        $('.site-demo-active').on('click', function () {
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        $('#LAY_app_left').click(function(){
+            //这里定义一个全局变量来方便判断动画收缩的效果,也就是放在最外面
+            $(".layui-side").animate({width:'toggle'});
+            $(".layui-body").animate({left:'0px'});
+            $(".layui-footer").animate({left:'0px'});
+            $('#LAY_app_flexible').toggle();
+            $('#LAY_app_left').toggle();
+        });
+        $('#LAY_app_flexible').click(function(){
+            //这里定义一个全局变量来方便判断动画收缩的效果,也就是放在最外面
+            $(".layui-side").animate({width:'toggle'});
+            $(".layui-body").animate({left:'200px'});
+            $(".layui-footer").animate({left:'200px'});
+            $('#LAY_app_flexible').toggle();
+            $('#LAY_app_left').toggle();
+        });
+    })
+</script>

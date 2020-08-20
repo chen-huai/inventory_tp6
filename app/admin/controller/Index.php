@@ -7,9 +7,14 @@ namespace app\admin\controller;
 use app\admin\modle\Permissions;
 use app\admin\modle\User;
 use app\admin\modle\UserPermissionsRelationship;
+use \think\facade\View;
 
 class Index
 {
+    public function index()
+    {
+        return View::fetch();
+    }
     public function userData()
     {
         $user = new User();

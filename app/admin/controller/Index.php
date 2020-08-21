@@ -8,7 +8,7 @@ use app\admin\modle\Permissions;
 use app\admin\modle\User;
 use app\admin\modle\UserPermissionsRelationship;
 use \think\facade\View;
-
+//测试用
 class Index
 {
     public function index()

@@ -61,66 +61,21 @@
             layer = layui.layer,
             $ = layui.jquery;
 
-        // 申请人初始页面
-        const userLayer = 'index';
-        // 批准人初始页面
-        const approverLayer = 'approver';
-        // HR界面
-        const hrApproverLayer = 'hr_approver';
-
-        if('{$Think.session.username}' != '' ) {
-
-            if('{$Think.session.approver}'=='Approver') {
-                window.location = hrApproverLayer;
-            }else if('{$Think.session.approver}' ==''){
-                window.location = userLayer;
-            } else {
-                window.location = approverLayer;
-            }
-        }
-
+        // // 申请人初始页面
+        const userLayer = 'userlist';
 
         // 进行登录操作
         form.on('submit(login)', function (data) {
 
             data = data.field;
-
+            console.log(data);
             if (data.username == '') {
                 layer.msg('用户名不能为空');
                 return false;
             }
 
-            // if (data.password == '') {
-            //     layer.msg('密码不能为空');
-            //     return false;
-            // }
-
-            // $.get('verify', { username: data.username, password: data.password }, function(res, status, xhr){
-            //     if(xhr.status == 200) {
-
-            //         if(res.flag) {
-            //             if(res.approver) {
-            //                 window.location = approverLayer;
-            //             } else {
-            //                 window.location = userLayer;
-            //             }
-            //         } else {
-            //             $('#username').val('');
-            //             $('#password').val('');
-            //             layer.msg(res.msg);
-            //         }
-            //     } else {
-            //         const msg = 'Code: 200 服务器请求异常.';
-            //         layer.msg(msg, {icon: 0});
-            //     }
-            // })
-
-            $.post('verify', { username: data.username, password: data.password }, function(res, status, xhr){
-                if(xhr.status != 200) {
-                    const msg = 'Code: 200 服务器请求异常.';
-                    return layer.msg(msg, {icon: 0});
-                };
-
+            $.post('admin.php/verify', data, function(res){
+                console.log(res);
                 if(res.ini) {
                     return layer.open({
                         type: 2,
@@ -153,20 +108,8 @@
                     $('#password').val('');
                     return layer.msg(res.msg);
                 };
+                window.location = userLayer;
 
-                // if(res.approver) {
-                //     window.location = approverLayer;
-                // } else {
-                //     window.location = userLayer;
-                // };
-                console.log(res);
-                if(res.approver =='Approver') {
-                    window.location = hrApproverLayer;
-                } else if(!res.approver && typeof(res.approver)!='undefined' && res.approver!=0){
-                    window.location = userLayer;
-                }else {
-                    window.location = approverLayer;
-                };
             })
             return false;
         });

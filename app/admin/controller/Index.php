@@ -37,13 +37,13 @@ class Index
         $user = new UserPermissionsRelationship();
         $user->save([
             'user_id'=> '2',
-            'permissions_id'=> '2',
+            'permissions_id'=> '3',
         ]);
     }
     public function search()
     {
 
-       return json(User::find(1)->UserPermissionsRelationship);
+       return json(User::find(2)->UserPermissionsRelationship);
     }
     public function searchMany()
     {
@@ -51,7 +51,7 @@ class Index
 //       return json(User::find(1)->permissions()->select());
 
 
-        $user = User::find(1);
+        $user = User::find(2);
         $role = $user -> permissions;
         return json($role);
 //        $user = User::alias('u')->field(['username','password'])->select();
@@ -72,6 +72,18 @@ class Index
         } catch (ValidateException $e) {
             dump($e->getError());
         }
+    }
+    public function sessionTest()
+    {
+        $res = session('power');
+        if($res){
+            foreach ($res as $r){
+                dump($r['permissionsName']);
+            };
+        }else{
+            return json('session已清空');
+        }
+
     }
 
 }

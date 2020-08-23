@@ -4,18 +4,37 @@
 namespace app\admin\controller;
 
 
-class Base
+use app\BaseController;
+use think\App;
+use think\exception\HttpResponseException;
+use think\facade\Session;
+use think\facade\View;
+
+class Base extends BaseController
 {
-    public function _initialize()
+    public function initialize()
     {
-        if (!session('username')) {
-            $this->error('请先登录系统', 'Index/login');
-        }else{
+        parent::initialize();
+
+        if (!Session::has('username')) {
+            return $this->redirectTo(url('admin/index/sessionTest'));
+        }
+        else{
+//            $power = Session::get('power');
+//            View::fetch('admin@user/index',['power' => $power]);
             $userInfo = array(
-                'username' => session('username'),
-                'power' => session('power')
+                'username' => Session::get('username'),
+                'power' => Session::get('power')
             );
-            $this->assign('userInfo', $userInfo);
+            View::assign('userInfo', $userInfo);
+            return $this->redirectTo(url('admin@user/index'));
         }
     }
+
+    public function redirectTo(...$args)
+    {
+        // 此处 throw new HttpResponseException 这个异常一定要写
+        throw new HttpResponseException(redirect(...$args));
+    }
+
 }

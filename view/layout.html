@@ -38,21 +38,25 @@
 <!--                    <dd><a href="">安全设置</a></dd>-->
 <!--                </dl>-->
 <!--            </li>-->
-            <li class="layui-nav-item"><a href="{:url('admin/Index/logout')}">退出</a></li>
+            <li class="layui-nav-item"><a href='' id = 'logout'>退出</a></li>
+
         </ul>
     </div>
 
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            {foreach $power as $key=>$item}
+            {if condition = "$item['permissionsName'] eq '人员管理'"}
             <ul class="layui-nav layui-nav-tree site-demo-nav">
                 <li class="layui-nav-item layui-nav-itemed" >
                     <a class="javascript:;" href="javascript:;"><i class="layui-icon layui-icon-username"></i>人员管理</a>
                     <dl class="layui-nav-child">
-                        <dd class=""><a href="../../admin/users/userlist">用户管理</a></dd>
+                        <dd class=""><a href="userlist">用户管理</a></dd>
                         <dd class=""><a href="../../admin/supplier/userlist">权限管理</a></dd>
                     </dl>
                 </li>
+                {elseif condition = "$item['permissionsName'] eq '物品管理'"}
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="javascript:;" href="javascript:;"><i class="layui-icon layui-icon-component"></i>物品管理</a>
                     <dl class="layui-nav-child">
@@ -60,6 +64,8 @@
                         <dd class=""><a href="../../admin/supplier/userlist">商品管理</a></dd>
                     </dl>
                 </li>
+                {/if}
+                {/foreach}
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="javascript:;" href="javascript:;"><i class="layui-icon layui-icon-list"></i>仓库管理</a>
                     <dl class="layui-nav-child">
@@ -96,6 +102,8 @@
             , layedit = layui.layedit
             , table = layui.table
             , layer = layui.layer;
+        const logoutLayer = '/';
+
         var active = {
             tabAdd: function () {
                 //新增一个Tab项
@@ -128,6 +136,20 @@
             $(".layui-footer").animate({left:'200px'});
             $('#LAY_app_flexible').toggle();
             $('#LAY_app_left').toggle();
+        });
+        //    退出登入
+        $('#logout').click(function() {
+            console.log(111);
+            $.post('admin.php/logout', function(res){
+                console.log(res);
+                if(res.flag) {
+                    window.location = logoutLayer;
+                    return layer.msg(res.msg);
+                }else {
+                    return layer.msg(res.msg);
+                };
+            })
+            return false;
         });
     })
 </script>

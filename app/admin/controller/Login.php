@@ -7,6 +7,7 @@ namespace app\admin\controller;
 use think\facade\View;
 use app\validate\User as loginVi;
 use app\admin\modle\User;
+use think\facade\Session;
 
 class Login
 {
@@ -64,10 +65,10 @@ class Login
             // session_start();
             // $_SESSION['username'] = $username;
             // $_SESSION['approver'] = !empty($userInfo['ApproveDep']);
-            session('username', $data['username']);
-            session('id', $userInfo['0']['id']);
-            session('power',$power);
-            session('toggle', true);
+            Session::set('username', $data['username']);
+            Session::set('id', $userInfo['0']['id']);
+            Session::set('power',$power);
+            Session::set('toggle', true);
             $flag = true;
         } else {
             $msg = '用户名或密码错误';
@@ -84,7 +85,17 @@ class Login
     //用户退出登录的方法
     public function logout()
     {
-        session(null);
-        $this->success('退出登录成功', '/login');
+        Session::clear('');
+        $judge = Session::has('username');
+//        dump($judge);
+//        die;
+        if($judge){
+            $res['flag'] = false;
+            $res['msg'] = '退出用户失败';
+        }else{
+            $res['flag'] = true;
+            $res['msg'] = '退出用户成功';
+        }
+        return json($res);
     }
 }

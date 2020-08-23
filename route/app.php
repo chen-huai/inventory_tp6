@@ -12,7 +12,8 @@ use think\facade\Route;
 
 //admin分组
 Route::group(function () {
-    Route::view('login','admin/login/login');
+
+    Route::view('/','admin/login/login');
 //    Route::post('verify','admin/login/verify');
     Route::view('userlist','admin/user/index');
 });

@@ -46,6 +46,8 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            {foreach $power as $key=>$item}
+            {if condition = "$item['permissionsName'] eq '人员管理'"}
             <ul class="layui-nav layui-nav-tree site-demo-nav">
                 <li class="layui-nav-item layui-nav-itemed" >
                     <a class="javascript:;" href="javascript:;"><i class="layui-icon layui-icon-username"></i>人员管理</a>
@@ -54,6 +56,7 @@
                         <dd class=""><a href="../../admin/supplier/userlist">权限管理</a></dd>
                     </dl>
                 </li>
+                {elseif condition = "$item['permissionsName'] eq '物品管理'"}
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="javascript:;" href="javascript:;"><i class="layui-icon layui-icon-component"></i>物品管理</a>
                     <dl class="layui-nav-child">
@@ -61,6 +64,8 @@
                         <dd class=""><a href="../../admin/supplier/userlist">商品管理</a></dd>
                     </dl>
                 </li>
+                {/if}
+                {/foreach}
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="javascript:;" href="javascript:;"><i class="layui-icon layui-icon-list"></i>仓库管理</a>
                     <dl class="layui-nav-child">

@@ -36,7 +36,7 @@ class Index
     {
         $user = new UserPermissionsRelationship();
         $user->save([
-            'user_id'=> '2',
+            'user_id'=> '1',
             'permissions_id'=> '3',
         ]);
     }

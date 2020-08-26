@@ -14,20 +14,23 @@ class Base extends BaseController
 {
     public function initialize()
     {
-        parent::initialize();
+//        parent::initialize();
+
 
         if (!Session::has('username')) {
-            return $this->redirectTo(url('admin/index/sessionTest'));
+            return $this->redirectTo(url('/'));
         }
         else{
-//            $power = Session::get('power');
+            $power = session('power');
+            View::assign('power', $power);
 //            View::fetch('admin@user/index',['power' => $power]);
-            $userInfo = array(
-                'username' => Session::get('username'),
-                'power' => Session::get('power')
-            );
-            View::assign('userInfo', $userInfo);
-            return $this->redirectTo(url('admin@user/index'));
+//            $userInfo = array(
+//                'username' => Session::get('username'),
+////
+//                'power' => Session::get('power')
+//            );
+//            View::assign('userInfo', $userInfo);
+//            return $this->redirectTo(url('/userlist'));
         }
     }
 
